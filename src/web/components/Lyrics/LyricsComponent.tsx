@@ -1,6 +1,6 @@
-import React, { FunctionComponent, useState } from "react";
-import { Button, TextInput, View } from "react-native";
-import "./style.less";
+import React, { FunctionComponent, useRef, useState } from "react";
+import { Button, KeyboardAvoidingView, SafeAreaView, TextInput, View, Text } from "react-native";
+import { getLyrics } from "../../../core/actionCreators/lyricsActionCreators";
 
 interface Props {
   lyrics: string;
@@ -12,33 +12,62 @@ interface Props {
 
 const SearchComponent: FunctionComponent<any> = (props: Props) => {
   const { onSearch, onClear, lyrics, isLoading, error } = props;
+  let textInput = useRef(null)
   const [artist, setArtist] = useState("");
   const [song, setSong] = useState("");
 
   if (error) {
     console.log("error: ", error);
-    return <div>{error}</div>;
+    return <Text>{error}</Text>;
   }
 
   if (isLoading) {
-    return <div>{"Loading.."}</div>;
+    return <Text>{"Loading.."}</Text>;
   }
 
+  const getLyrics = () => {
+    onSearch(artist, song);
+    setArtist("");
+    setSong("");
+  }
+
+  const artistInputChange = (val: string) => {
+    setArtist(val);
+  }
+
+  const songInputChange = (val: string) => {
+    setSong(val);
+  }
+
+
   return (
-    <View>
-      <TextInput value={artist} placeholder="artist" onChangeText={val => setArtist(val)} />
-      <TextInput value={song} placeholder="song" onChangeText={val => setSong(val)} />
-      <Button
-        title="Get Lyrics"
-        onPress={() => {
-          onSearch(artist, song);
-          setArtist("");
-          setSong("");
-        }}
-      />
-      <Button title="Clear Results" onPress={onClear} />
-      <View>{lyrics}</View>
-    </View>
+    <SafeAreaView>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={50}
+        behavior={'padding'}
+      >
+        <TextInput
+          value={artist}
+          placeholder="artist"
+          onChangeText={artistInputChange}
+          keyboardType="default"
+          returnKeyType="next"
+        />
+        <TextInput
+          value={song}
+          placeholder="song"
+          onChangeText={songInputChange}
+          keyboardType="default"
+          returnKeyType="next"
+        />
+        <Button
+          title="Get Lyrics"
+          onPress={() => getLyrics()}
+        />
+        <Button title="Clear Results" onPress={onClear} />
+        <View><Text>{lyrics}</Text></View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 

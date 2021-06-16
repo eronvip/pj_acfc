@@ -1,14 +1,13 @@
 import React, { FunctionComponent } from "react";
+import { View, Text } from "react-native";
 
 import LyricsContainer from "../components/Lyrics/LyricsContainer";
 
-const LyricScreen: FunctionComponent = (props: any) => {
+export function LyricScreen({ navigation }: { navigation: any }) {
   return (
-    <div>
-      <h1>Lyrics Search</h1>
+    <View>
+      <Text>Lyrics Search</Text>
       <LyricsContainer />
-    </div>
+    </View>
   );
 };
-
-export default LyricScreen;

@@ -1,15 +1,18 @@
+import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import React, { FunctionComponent, useState } from "react";
 import { View, Button, Text } from "react-native";
 
-const HomeScreen: FunctionComponent = (props: any) => {
-  const { history } = props;
+export function HomeScreen({ navigation }: { navigation: any }) {
   
   const movePage = () => {
-    history.push("/lyric")
+    navigation.navigate("Lyrics");
   }
+
   return (
     <View>
-      <Text>Home</Text>
+      <FontAwesomeIcon icon={faHome} />
+      <Text>Home Page</Text>
       <Button
         title="Press here"
         onPress={() => movePage()}
@@ -17,5 +20,3 @@ const HomeScreen: FunctionComponent = (props: any) => {
     </View>
   );
 };
-
-export default HomeScreen;
