@@ -7,17 +7,20 @@ import { getLyrics } from "../../../core/actionCreators/lyricsActionCreators";
 import { AppState } from "../../../core/reducers/rootReducer";
 import HeaderComponent from "./component";
 
-// const mapStateToProps = (state: AppState) => {
-// 	return {
-// 	};
-// };
+const mapStateToProps = (state: any, ownProps: any) => {
+	return {
+    navigation: ownProps.navigation
+	};
+};
 
 // const mapDispatchToProps = (dispatch: Dispatch<actionTypes.LyricsAction>) => ({
 // });
 
-// const withConnect = connect(
-// 	mapStateToProps,
-// 	mapDispatchToProps
-// )
+const withConnect = connect(
+	mapStateToProps,
+	null
+)
 
-export default compose()(HeaderComponent);
+export default compose(
+  withConnect
+)(HeaderComponent);

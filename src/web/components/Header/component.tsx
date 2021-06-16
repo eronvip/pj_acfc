@@ -1,3 +1,5 @@
+import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import React, { FunctionComponent, useRef, useState } from "react";
 import { StyleSheet, Button, KeyboardAvoidingView, SafeAreaView, TextInput, View, Text, Image, TouchableOpacity } from "react-native";
 
@@ -44,6 +46,7 @@ const dataCategory = [
 ]
 
 const HeaderComponent: FunctionComponent<any> = (props: any) => {
+  const { navigation } = props;
   const [currentCategory, setCurrentCategory] = useState(0);
   const [isPressMenu, setPressMenu] = useState(false);
 
@@ -54,10 +57,13 @@ const HeaderComponent: FunctionComponent<any> = (props: any) => {
   const pressOutSideMenu = () => {
     setPressMenu(false);
   }
+  const gotoHomePage = () => {
+    navigation.navigate("Home");
+  }
   const menu = () => {
     return dataCategory
       .filter(cat => cat.parentId === null)
-      .map(cat => 
+      .map(cat =>
         <TouchableOpacity
           onPress={() => selectCategory(cat.id)}
           key={cat.id}
@@ -72,16 +78,17 @@ const HeaderComponent: FunctionComponent<any> = (props: any) => {
   }
   const showSubMenu = () => {
     if (isPressMenu) {
-      return <View>Press Menu</View>
+      return <View><Text>Press Menu</Text></View>
     }
   }
   return (
     <View style={styles.container}>
       <Image style={styles.logo} source={require("../../../../assets/images/logo.png")} />
       <View style={styles.menu}>
+        <TouchableOpacity onPress={() => gotoHomePage()} style={styles.cellMenu}><Text><FontAwesomeIcon icon={faHome} /></Text></TouchableOpacity>
         {menu()}
       </View>
-      {showSubMenu()}
+      {/* {showSubMenu()} */}
     </View>
   );
 };
@@ -106,6 +113,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textTransform: "uppercase",
     borderBottomWidth: 2,
+    borderBottomColor: "transparent",
     paddingLeft: 5,
     paddingRight: 5
   }
